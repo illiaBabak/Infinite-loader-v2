@@ -19,8 +19,6 @@ export const App = (): JSX.Element => {
 
   const pokemons = data?.pages.flatMap((el) => el.results) ?? [];
 
-  console.log(data?.pages[0].count, pokemons.length);
-
   const handleIntersect = (el: HTMLElement | null) => {
     observer.current = new IntersectionObserver((entries) => {
       if (!entries[0].isIntersecting) return;
