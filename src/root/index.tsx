@@ -23,7 +23,7 @@ export const App = (): JSX.Element => {
     observer.current = new IntersectionObserver((entries) => {
       if (!entries[0].isIntersecting) return;
 
-      if (pokemons.length + PAGE_SIZE <= (data?.pages[0].count ?? 0)) fetchNextPage();
+      if (pokemons.length + PAGE_SIZE <= (data?.pages[0].count ?? 0) && !isFetchingNextPage) fetchNextPage();
     }, options);
 
     if (el) observer.current.observe(el);

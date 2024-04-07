@@ -1,37 +1,21 @@
 import { PokemonType } from 'src/types/pokemon';
 
-type DataType = {
-  results: PokemonType[];
-};
-
 export type PokeListResponse = {
   count: number;
   results: PokemonType[];
 };
 
+const isObj = (data: unknown): data is object => !!data && typeof data === 'object';
+
+const isString = (val: unknown): val is string => typeof val === 'string';
+
 const isPokemon = (data: unknown): data is PokemonType => {
-  return (
-    !!data &&
-    typeof data === 'object' &&
-    'name' in data &&
-    'url' in data &&
-    typeof data.name === 'string' &&
-    typeof data.url === 'string'
-  );
-};
-
-const isPokemonArr = (data: unknown): data is PokemonType[] => {
-  return Array.isArray(data) && data.every((el) => isPokemon(el));
-};
-
-export const isPokemonsData = (data: unknown): data is DataType => {
-  return !!data && typeof data === 'object' && 'results' in data && isPokemonArr(data.results);
+  return isObj(data) && 'name' in data && 'url' in data && typeof isString(data.name) && isString(data.url);
 };
 
 export const isPokemonsListResponse = (data: unknown): data is PokeListResponse => {
   return (
-    !!data &&
-    typeof data === 'object' &&
+    isObj(data) &&
     'results' in data &&
     'count' in data &&
     typeof data.count === 'number' &&
